@@ -1,0 +1,17 @@
+<workflow-app name="sshWithParameters2" xmlns="uri:oozie:workflow:0.5">
+    <start to="ssh"/>
+    <kill name="Kill">
+       <message>操作失败，错误消息[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <action name="ssh">
+       <ssh xmlns="uri:oozie:ssh-action:0.1">
+           <host>${user}@${ipadd}</host>
+           <command>${command}</command>
+           <args>${id}</args>
+           <args>${name}</args>
+       </ssh>
+       <ok to="End"/>
+       <error to="Kill"/>
+    </action>
+    <end name="End"/>
+</workflow-app>
